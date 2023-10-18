@@ -1,0 +1,30 @@
+version: '3'
+services:
+  atakama01:
+    build: ./ata
+    image: ata
+    working_dir: /opt
+    volumes:
+      - type: bind
+        # в какой папке хост-машины будет результат 
+        source: ./result
+        target: /opt/result
+    environment:
+        # данные бд
+        ATA_DATABASE: ???
+        ATA_USER: ???
+        ATA_PASSWORD: ???
+        ATA_HOST: ???
+        ATA_PORT: ???
+        # количество записей за один запрос (пока чанки состоят из 1 сета)
+        ATA_CHUNK_SIZE: 1
+        # количество потоков. рекомендуемое значение по числу ядер в сервере постгрес
+        ATA_MAX_THREADS: 10
+        # целевая папка
+        ATA_DESTINATION_FOLDER: /opt/result/
+        # Количество собранных потоком json чанков перед логированием
+        ATA_COUNT_CHUNKS_FOR_LOG: 2
+        # Количество записей (All - все, число - определенное количество)
+        ATA_LIMIT: All
+        
+    command: sh -c "sleep 1d"
